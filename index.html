@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ef">
+  <meta name="description" content="CTRL+F is an interactive reading forum for security papers, AI failures, and the assumptions underneath them.">
+  <title>CTRL+F · Critical Threat Reading & Literature Forum</title>
+  <style>
+    :root { --paper:#f5f3ef; --ink:#191a19; --muted:#646761; --rule:#d8d7d0; --pale:#eae8e1; --lime:#dcff70; --dark:#202220; --warm:#fcfbf8; --orange:#ff8668; }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:inherit} button,input{font:inherit} button{cursor:pointer}
+    button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #7f9d28;outline-offset:3px}
+    .wrap{max-width:1170px;padding:0 30px;margin:0 auto}
+    .site-nav{height:83px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:20px}
+    .identity{display:flex;align-items:center;gap:12px;text-decoration:none;white-space:nowrap}
+    .keycaps{display:flex;gap:4px}
+    .keycaps span{border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink);border-radius:5px;background:#fff;padding:3px 8px;font-size:16px;line-height:24px;font-weight:750}
+    .identity-label{font:700 12px/1.25 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.07em;text-transform:uppercase}
+    .top-links{display:flex;gap:28px;align-items:center}
+    .top-links a{text-decoration:none;font-size:13px;font-weight:650}
+    .top-links a:last-child{background:var(--ink);color:#fff;padding:10px 16px;border-radius:100px}
+    .hero{position:relative;padding:81px 0 84px;border-bottom:1px solid var(--rule);overflow:hidden}
+    .eyebrow{font:700 12px/1.3 ui-monospace,Menlo,Consolas,monospace;text-transform:uppercase;letter-spacing:.09em;display:flex;align-items:center;gap:10px}
+    .spark{display:inline-block;background:var(--lime);padding:5px 9px;border:1px solid var(--ink);border-radius:100px;font-size:11px}
+    h1{font-size:clamp(64px,8.9vw,127px);line-height:.94;letter-spacing:-.088em;max-width:960px;margin:25px 0 23px;font-weight:850}
+    h1 em{font-style:normal;background:var(--lime);padding:0 .09em;border-radius:5px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+    .hero-bottom{display:flex;justify-content:space-between;align-items:end;gap:40px}
+    .lede{font-size:19px;line-height:1.6;max-width:630px;margin:0;color:#4b5049}
+    .hero-cta{display:inline-flex;align-items:center;gap:17px;white-space:nowrap;font-size:13px;text-decoration:none;font-weight:750;border-bottom:2px solid;padding:8px 0}
+    .asterisk{position:absolute;right:6%;top:96px;font-size:85px;color:#d7d8cf;transform:rotate(-16deg);user-select:none}
+    .ticker{background:var(--dark);color:#f1f1e8;overflow:hidden}
+    .ticker-inner{display:flex;align-items:center;justify-content:space-around;gap:26px;padding:15px 8px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.065em;text-transform:uppercase;white-space:nowrap}
+    .ticker i{width:6px;height:6px;background:var(--lime);border-radius:50%;flex:none}
+    .section{padding:72px 0}
+    .section-top{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:29px}
+    .section-kicker{font:700 12px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.09em;color:#747870;margin-bottom:9px}
+    h2{font-size:clamp(33px,4.1vw,50px);letter-spacing:-.055em;line-height:1.06;margin:0}
+    .section-note{max-width:380px;font-size:14px;color:var(--muted);margin:0}
+    .tools{display:flex;justify-content:space-between;gap:14px;align-items:center;margin:0 0 21px;flex-wrap:wrap}
+    .filters{display:flex;gap:7px;flex-wrap:wrap}
+    .pill{border:1px solid #c6c9be;background:transparent;color:#52564f;border-radius:60px;padding:8px 13px;font-size:12px;font-weight:700;transition:background .15s,border-color .15s}
+    .pill:hover,.pill[aria-pressed="true"]{background:var(--dark);color:#fff;border-color:var(--dark)}
+    .search{display:flex;align-items:center;border:1px solid #c4c4bb;border-radius:5px;background:var(--warm);padding:0 13px;min-width:255px;gap:11px}
+    .search span{color:#75776e;font-size:19px}.search input{background:transparent;border:0;outline:0;width:100%;padding:11px 0;font-size:13px;min-width:0}.search:focus-within{outline:2px solid #7f9d28}
+    .count{color:#7a7c74;font:600 12px ui-monospace,Menlo,monospace;margin:0 0 13px}
+    .shelf{display:grid;grid-template-columns:1fr;gap:11px}
+    .paper{background:#fff;border:1px solid #d6d5ce;border-radius:9px;overflow:hidden;box-shadow:0 2px 0 rgba(0,0,0,.025)}
+    .paper-main{display:grid;grid-template-columns:82px minmax(0,1fr) 125px;gap:23px;align-items:center;padding:22px 25px}
+    .number{font:700 28px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:-.09em;color:#9ca097;align-self:start;padding-top:5px}
+    .mini-tags{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 10px}
+    .mini-tag{font:650 10px ui-monospace,Menlo,Consolas,monospace;text-transform:uppercase;letter-spacing:.04em;border:1px solid #d8dbd2;padding:4px 7px;border-radius:3px;color:#686d63}
+    .paper h3{font-size:clamp(18px,2.4vw,23px);line-height:1.23;letter-spacing:-.025em;margin:0 0 8px;font-weight:750}
+    .authors{color:#858880;font-size:12px;margin-bottom:10px}
+    .hook{font-size:14px;margin:0;color:#53584f;max-width:710px}
+    .unpack{align-self:center;justify-self:end;border:1px solid var(--ink);border-radius:100px;background:var(--lime);font-size:12px;font-weight:750;padding:11px 16px;white-space:nowrap;transition:transform .12s}
+    .unpack:hover{transform:translateY(-2px)}
+    .paper[aria-expanded="true"] .unpack{background:var(--dark);color:#fff}
+    .paper-detail{display:none;border-top:1px solid #e2e3db;background:#faf9f5;padding:0 25px 25px 130px}
+    .paper[aria-expanded="true"] .paper-detail{display:block}
+    .facts{display:grid;grid-template-columns:1fr 1fr;gap:19px 40px;padding:25px 0 22px}
+    .fact h4{font:750 11px ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.09em;margin:0 0 7px;color:#72766d}
+    .fact p{font-size:14px;line-height:1.62;margin:0}
+    .fact.warning{grid-column:1/-1;border-left:3px solid #b5c676;padding-left:15px}
+    .quiz{background:var(--dark);color:#fff;border-radius:7px;padding:22px;margin-top:5px}
+    .quiz .q-label{font:700 11px ui-monospace,Menlo,monospace;color:var(--lime);letter-spacing:.09em;text-transform:uppercase}
+    .quiz h4{font-size:19px;letter-spacing:-.025em;line-height:1.3;margin:9px 0 14px;font-weight:650}
+    .choices{display:flex;flex-wrap:wrap;gap:8px}
+    .choice{border:1px solid #61665d;background:#323530;color:#f0f0e9;border-radius:4px;padding:9px 12px;text-align:left;font-size:12px;line-height:1.4}
+    .choice:hover,.choice[aria-pressed="true"]{border-color:var(--lime);background:#44503a;color:#fff}
+    .feedback{display:none;background:#f4f9e7;color:#242821;border-radius:4px;padding:12px 14px;margin:14px 0 0;font-size:13px;line-height:1.5}
+    .feedback.visible{display:block}
+    .paper-actions{display:flex;align-items:center;gap:22px;margin-top:18px;flex-wrap:wrap}
+    .paper-link{text-decoration:none;font-weight:750;font-size:13px;border-bottom:1px solid;padding:4px 0}
+    .question{font-size:13px;color:#5e625a}
+    .question strong{color:#282b25}
+    .empty{padding:45px;text-align:center;border:1px dashed #aaa99d;border-radius:6px;color:var(--muted)}
+    .method{background:var(--lime);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+    .method-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:55px;align-items:start}
+    .method h2{font-size:clamp(40px,5vw,63px);line-height:1.03}
+    .method .sub{font-size:17px;line-height:1.6;color:#465032;max-width:480px;margin:20px 0 0}
+    .steps{border-top:1px solid #919f63}
+    .step{display:grid;grid-template-columns:58px 1fr;gap:15px;padding:15px 0;border-bottom:1px solid #919f63}
+    .step span{font:750 12px ui-monospace,Menlo,monospace;padding-top:2px}
+    .step h3{margin:0 0 4px;font-size:17px;letter-spacing:-.025em}
+    .step p{margin:0;color:#505b3c;font-size:13px}
+    .manifesto{padding:72px 0 90px}
+    .manifesto-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+    .manifesto p{margin-top:0;max-width:490px;font-size:17px;line-height:1.7;color:#54584e}
+    .statement{font-size:clamp(28px,3vw,40px);font-weight:800;line-height:1.18;letter-spacing:-.05em}
+    .footer{background:var(--ink);color:#f3f1e7;padding:35px 0}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap}
+    .footer strong{font-size:19px;letter-spacing:-.06em}.footer small{color:#aaa9a0;font-size:12px;max-width:520px}
+    .footer a{font-size:12px;color:var(--lime)}
+    @media(max-width:800px){.wrap{padding:0 18px}.hero{padding:55px 0 64px}.asterisk{display:none}.hero-bottom{align-items:start;flex-direction:column;gap:24px}.paper-main{grid-template-columns:43px minmax(0,1fr);gap:12px;padding:20px 17px}.number{font-size:19px}.unpack{grid-column:2;justify-self:start;margin-top:2px}.paper-detail{padding:0 17px 20px 72px}.facts{grid-template-columns:1fr;gap:18px}.fact.warning{grid-column:auto}.method-grid,.manifesto-grid{grid-template-columns:1fr;gap:26px}.section{padding:55px 0}.section-top{align-items:start;flex-direction:column}.top-links{gap:13px}.top-links a:first-child{display:none}}
+    @media(max-width:480px){.identity-label{font-size:9px}.keycaps span{font-size:13px;padding:2px 5px}.site-nav{height:70px}.top-links a:last-child{font-size:11px;padding:8px 10px}.ticker-inner{font-size:9px;gap:10px}.ticker-inner span:nth-of-type(n+3),.ticker-inner i:nth-of-type(n+2){display:none}.paper-detail{padding:0 16px 18px}.paper-main{grid-template-columns:1fr}.number{display:none}.unpack{grid-column:1}.search{width:100%}.lede{font-size:17px}.quiz{padding:17px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="wrap"><nav class="site-nav" aria-label="Main navigation">
+    <a class="identity" href="#top" aria-label="CTRL+F home"><span class="keycaps" aria-hidden="true"><span>CTRL</span><span>F</span></span><span class="identity-label">Critical Threat<br>Reading & Literature Forum</span></a>
+    <div class="top-links"><a href="#format">The format</a><a href="#library">Explore papers ↗</a></div>
+  </nav></div>
+  <main id="top">
+    <header class="hero"><div class="wrap"><span class="asterisk" aria-hidden="true">✳</span>
+      <div class="eyebrow"><span class="spark">CTRL+F</span> A paper club for the skeptical</div>
+      <h1>Read between<br><em>the lines.</em></h1>
+      <div class="hero-bottom"><p class="lede">AI security. System failures. Famous papers with uncomfortable questions. We read the research, inspect the assumptions, and argue about what actually holds up.</p><a class="hero-cta" href="#library">Enter the reading room <span aria-hidden="true">↘</span></a></div>
+    </div></header>
+    <div class="ticker" aria-label="Topics"><div class="wrap ticker-inner"><span>LESS SUMMARY</span><i></i><span>MORE SCRUTINY</span><i></i><span>TRUST BOUNDARIES</span><i></i><span>PROTOCOL FAILURES</span></div></div>
+    <section class="section" id="library"><div class="wrap">
+      <div class="section-top"><div><div class="section-kicker">01 / THE READING ROOM</div><h2>Start with a question.</h2></div><p class="section-note">Five papers, from classic system security to agentic AI. Each brief is deliberately short. The real work starts when you disagree.</p></div>
+      <div class="tools"><div class="filters" role="group" aria-label="Filter reading list">
+        <button class="pill" data-filter="all" aria-pressed="true">All reads</button>
+        <button class="pill" data-filter="agents" aria-pressed="false">AI agents & MCP</button>
+        <button class="pill" data-filter="classics" aria-pressed="false">Security classics</button>
+        <button class="pill" data-filter="llm" aria-pressed="false">LLM attacks</button>
+      </div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" aria-label="Search papers" placeholder="Search the shelf…" autocomplete="off"><span aria-hidden="true">⌘F</span></label></div>
+      <p class="count" id="count" aria-live="polite">05 briefs on the shelf</p>
+      <div class="shelf" id="shelf"></div>
+      <div class="empty" id="empty" hidden>Nothing on this shelf yet. Try a different search or filter.</div>
+    </div></section>
+    <section class="section method" id="format"><div class="wrap method-grid"><div><div class="section-kicker" style="color:#515d30">02 / THE FORMAT</div><h2>Not another<br>slide deck.</h2><p class="sub">A simple way to turn reading into conversation. No expertise test. No need to have all the answers. Show up with one good question.</p></div>
+      <div class="steps"><div class="step"><span>10 MIN</span><div><h3>The setup</h3><p>What problem was this paper trying to solve?</p></div></div><div class="step"><span>15 MIN</span><div><h3>The breakdown</h3><p>Understand the method, the evidence, and the claimed result.</p></div></div><div class="step"><span>20 MIN</span><div><h3>The challenge</h3><p>Pick apart assumptions, debate defenses, find failure cases.</p></div></div><div class="step"><span>15 MIN</span><div><h3>The open question</h3><p>What would we test next? Leave with a falsifiable idea.</p></div></div></div>
+    </div></section>
+    <section class="manifesto"><div class="wrap manifesto-grid"><div><div class="section-kicker">03 / WHY CTRL+F?</div><div class="statement">Because the most interesting part of a paper is often what it <em>doesn't</em> prove.</div></div><div><p>CTRL+F is a space for reading security research actively, not collecting summaries. We pair foundational ideas with modern AI systems, asking what changed, what stayed broken, and what evidence would change our minds.</p><p>Papers are linked to their original sources. Briefs distinguish reported findings from our interpretation, and prompts are invitations to think, not tests with a single right answer.</p></div></div></section>
+  </main>
+  <footer class="footer"><div class="wrap footer-inner"><strong>CTRL+F <span style="color:var(--lime)">↗</span></strong><small>Critical Threat Reading & Literature Forum · An independent reading initiative. No dates on the archive. Publication years appear only where relevant to the papers.</small><a href="#top">Back to top ↑</a></div></footer>
+  <script>
+    const papers = [
+      {
+        id:'01',category:'agents',group:'AI agents & MCP',year:'2026',title:'Description-Code Inconsistency in Real-world MCP Servers: Measurement, Detection, and Security Implications',authors:'Yutao Shi et al.',
+        hook:'A tool says one thing. Its implementation does another. How often does that actually happen?',
+        finding:'The authors compare 19,200 description–code pairs from 2,214 MCP servers using DCIChecker. They report inconsistencies in 9.93% of those pairs.',
+        significance:'Agent systems choose tools using natural-language descriptions. If those descriptions omit effects or misstate capabilities, both agents and reviewers can make decisions on an incomplete model of behavior.',
+        limitation:'This is a static-analysis and validation study. “Inconsistency” does not mean every flagged tool is malicious, nor does a mismatch alone prove exploitation.',
+        dilemma:'A tool says it only reads files. What check would you prioritize before allowing it into an agent workflow?',
+        choices:[['Only read its description','Fast, but it simply repeats the unverified claim. What evidence says the description is truthful?'],['Compare its code and declared behavior','Closer to the paper’s method. But static analysis can miss runtime behavior, dependencies, and conditional paths.'],['Constrain what it can do at runtime','Limits consequences even when the description is wrong. But policies need to be both enforceable and sufficiently narrow.']],
+        discussion:'What is the minimum evidence needed to trust a tool’s claimed capabilities?',url:'https://arxiv.org/abs/2606.04769',source:'Read the original paper ↗'
+      },
+      {
+        id:'02',category:'agents',group:'AI agents & MCP',year:'2026',title:'Unicode TAG-Block Concealment of Tool-Metadata Payloads in the Model Context Protocol',authors:'Mohammadreza Rashidi',
+        hook:'What if the tool description shown to a reviewer is not the same text that reaches the model?',
+        finding:'The study tests eight metadata techniques against a real-protocol setup and three MCP server implementations. All eight deliver payload text into model context in the tested setting; only TAG-block encoding is invisible in the approval view. None of the tested techniques triggers re-approval.',
+        significance:'A human cannot meaningfully approve metadata they cannot see. The problem is a mismatch between visible approval text and model-bound content.',
+        limitation:'Delivering a payload into model context is not the same as demonstrating that a live model followed it. The results are bounded by the implementations and harness evaluated.',
+        dilemma:'A review screen looks harmless, but invisible characters are present. What should an MCP client do?',
+        choices:[['Approve what the UI renders','A visual-only check misses precisely the hidden content that the paper studies.'],['Show escaped or canonicalized content','Makes invisible code points inspectable. The display should faithfully reflect what the model will receive.'],['Ask for approval once and cache it','Convenient, but post-approval metadata changes can break the assumptions behind consent.']],
+        discussion:'Should approval bind to a cryptographic hash of the exact metadata sent to the model?',url:'https://arxiv.org/abs/2607.05744',source:'Read the original paper ↗'
+      },
+      {
+        id:'03',category:'classics',group:'Security classic',year:'1984',title:'Reflections on Trusting Trust',authors:'Ken Thompson',
+        hook:'You audit the source code. It looks clean. Could the executable still be compromised?',
+        finding:'Thompson describes how a malicious compiler can insert a backdoor into a program and preserve the infection when compiling a new compiler, without leaving the attack visible in the source under inspection.',
+        significance:'A source-code audit is not enough to establish trust when the tools that transform the source into executable code are themselves untrusted.',
+        limitation:'The essay uses a constructed demonstration of an attack concept. It is not a measurement of how often production compilers are backdoored.',
+        dilemma:'You have reviewed clean source code but distrust the compiler binary. What would help most?',
+        choices:[['Re-read the source more carefully','Useful for source bugs, but it does not address a backdoor inserted by the compiler during build.'],['Use independently built toolchains','Diverse toolchains and reproducible-build checks reduce dependence on a single untrusted compiler path.'],['Trust the downloaded binary’s filename','A familiar name is not a meaningful attestation of build integrity.']],
+        discussion:'What is the modern analogue of Thompson’s untrusted compiler in an AI-agent pipeline?',url:'https://doi.org/10.1145/358198.358210',source:'Read via ACM ↗'
+      },
+      {
+        id:'04',category:'llm',group:'LLM attacks',year:'2023',title:'Not What You’ve Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection',authors:'Kai Greshake et al.',
+        hook:'When a model reads a web page or document, who is allowed to give it instructions?',
+        finding:'The researchers demonstrate that attackers can plant instructions in external material later retrieved by LLM applications. Those instructions can redirect application behavior, including tool use, in the studied settings.',
+        significance:'Untrusted content can be mistaken for operational instructions. Retrieval creates a boundary between data supplied by outsiders and commands authorized by users.',
+        limitation:'Specific attack outcomes depend on the model, application, available tools, and defensive controls. A demonstrated attack class is not a universal success rate.',
+        dilemma:'An agent finds “ignore your instructions” inside a document it was asked to summarize. What is your first design move?',
+        choices:[['Tell the model to ignore malicious text','A useful layer, but relying on a natural-language instruction alone leaves the same trust boundary in question.'],['Separate tool authorization from retrieved text','A stronger architectural response: untrusted text should not grant permissions or independently trigger privileged actions.'],['Trust documents from known websites','Provenance matters, but a compromised or user-editable page can still contain malicious instructions.']],
+        discussion:'Can a useful agent distinguish instructions from data without an external authorization mechanism?',url:'https://arxiv.org/abs/2302.12173',source:'Read the original paper ↗'
+      },
+      {
+        id:'05',category:'classics',group:'Security classic',year:'1975',title:'The Protection of Information in Computer Systems',authors:'Jerome H. Saltzer & Michael D. Schroeder',
+        hook:'Why do security principles from decades ago still explain failures in new AI systems?',
+        finding:'The paper articulates enduring design principles such as least privilege, complete mediation, fail-safe defaults, and psychological acceptability while surveying protection architectures.',
+        significance:'These principles give readers a vocabulary for evaluating agent permissions, tool approval interfaces, credential scope, and enforcement boundaries.',
+        limitation:'The paper offers design principles and architectural analysis, not an empirical study of modern MCP clients. Applications to agents are our comparison, not a finding from 1975.',
+        dilemma:'An AI agent can read files, run commands, and email results. Which principle would you test first?',
+        choices:[['Least privilege','Ask whether each capability is genuinely necessary and scoped to the current task.'],['Complete mediation','Ask whether every sensitive tool invocation is checked, not only the first one.'],['Psychological acceptability','Ask whether people can understand the permissions they are granting. All three matter.']],
+        discussion:'Do today’s AI-tool permission dialogs make secure choices understandable by default?',url:'https://doi.org/10.1109/PROC.1975.9939',source:'Read via IEEE ↗'
+      }
+    ];
+    const shelf=document.getElementById('shelf');
+    const count=document.getElementById('count');
+    const empty=document.getElementById('empty');
+    const search=document.getElementById('search');
+    const filterButtons=[...document.querySelectorAll('[data-filter]')];
+    let active='all';
+    const esc = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    function makePaper(p){
+      const el=document.createElement('article');
+      el.className='paper'; el.dataset.category=p.category; el.id='paper-'+p.id; el.setAttribute('aria-expanded','false');
+      el.innerHTML=`<div class="paper-main"><div class="number">${p.id}<span style="font-size:10px;letter-spacing:0"> / 05</span></div>
+       <div><div class="mini-tags"><span class="mini-tag">${esc(p.group)}</span><span class="mini-tag">${esc(p.year)} paper</span></div><h3>${esc(p.title)}</h3><div class="authors">${esc(p.authors)}</div><p class="hook">${esc(p.hook)}</p></div>
+       <button class="unpack" type="button" aria-expanded="false" aria-controls="detail-${p.id}">Unpack +</button></div>
+       <div class="paper-detail" id="detail-${p.id}"><div class="facts"><div class="fact"><h4>What the paper shows</h4><p>${esc(p.finding)}</p></div>
+       <div class="fact"><h4>Why it matters</h4><p>${esc(p.significance)}</p></div>
+       <div class="fact warning"><h4>Read carefully / what it does not prove</h4><p>${esc(p.limitation)}</p></div></div>
+       <div class="quiz"><div class="q-label">THE PAUSE & DECIDE MOMENT</div><h4>${esc(p.dilemma)}</h4><div class="choices">${p.choices.map((c,i)=>`<button type="button" class="choice" data-choice="${i}" aria-pressed="false">${esc(c[0])}</button>`).join('')}</div>
+       <div class="feedback" aria-live="polite"></div></div>
+       <div class="paper-actions"><a class="paper-link" target="_blank" rel="noopener noreferrer" href="${esc(p.url)}">${esc(p.source)}</a><div class="question"><strong>Ask the room:</strong> ${esc(p.discussion)}</div></div></div>`;
+      const toggle=el.querySelector('.unpack');
+      toggle.addEventListener('click',()=>{
+        const opened=el.getAttribute('aria-expanded')==='true';
+        el.setAttribute('aria-expanded',String(!opened));toggle.setAttribute('aria-expanded',String(!opened));
+        toggle.textContent=opened?'Unpack +':'Close −';
+      });
+      el.querySelectorAll('[data-choice]').forEach(btn=>btn.addEventListener('click',()=>{
+        el.querySelectorAll('[data-choice]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+        const f=el.querySelector('.feedback');f.textContent=p.choices[Number(btn.dataset.choice)][1];f.classList.add('visible');
+      }));
+      return el;
+    }
+    papers.forEach(p=>shelf.appendChild(makePaper(p)));
+    function update(){
+      const q=search.value.toLowerCase().trim();let visible=0;
+      papers.forEach(p=>{
+        const match=(active==='all'||active===p.category)&&[p.title,p.authors,p.hook,p.finding,p.group,p.discussion].join(' ').toLowerCase().includes(q);
+        const el=document.getElementById('paper-'+p.id);el.hidden=!match;
+        if(match)visible++;
+      });
+      count.textContent=String(visible).padStart(2,'0')+' '+(visible===1?'brief':'briefs')+' on the shelf';
+      empty.hidden=visible!==0;
+    }
+    filterButtons.forEach(btn=>btn.addEventListener('click',()=>{
+      active=btn.dataset.filter;
+      filterButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+      update();
+    }));
+    search.addEventListener('input',update);
+  </script>
+</body>
+</html>
